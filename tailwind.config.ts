@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -56,6 +57,14 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        // Government theme colors
+        'gov-blue': {
+          50: "hsl(var(--gov-blue-50))",
+          100: "hsl(var(--gov-blue-100))",
+          600: "hsl(var(--gov-blue-600))",
+          700: "hsl(var(--gov-blue-700))",
+          900: "hsl(var(--gov-blue-900))",
         },
       },
       borderRadius: {
