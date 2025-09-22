@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Building2, Users, Phone, Info, Brain } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -86,10 +87,30 @@ const Layout = ({ children }: LayoutProps) => {
               </NavLink>
             </nav>
 
-            {/* CTA Button */}
-            <Button variant="default" size="sm">
-              Sign In
-            </Button>
+            {/* Authentication */}
+            <div className="flex items-center space-x-4">
+              <SignedOut>
+                <SignInButton mode="redirect">
+                  <Button variant="outline" size="sm">
+                    Sign In
+                  </Button>
+                </SignInButton>
+                <NavLink to="/sign-up">
+                  <Button variant="default" size="sm">
+                    Sign Up
+                  </Button>
+                </NavLink>
+              </SignedOut>
+              <SignedIn>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8"
+                    }
+                  }}
+                />
+              </SignedIn>
+            </div>
           </div>
         </div>
       </header>
