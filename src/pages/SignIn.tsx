@@ -42,7 +42,7 @@ const SignInPage = () => {
               routing="path"
               path="/sign-in"
               signUpUrl="/sign-up"
-              redirectUrl="/"
+              afterSignInUrl="/"
               appearance={{
                 elements: {
                   formButtonPrimary: "bg-primary hover:bg-primary/90 text-primary-foreground",

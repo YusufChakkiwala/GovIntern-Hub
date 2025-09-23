@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, Clock, MessageSquare, HelpCircle, Bug, Lightbulb } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { saveContactMessage, sendContactEmail } from "@/lib/contact";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,14 +18,28 @@ const Contact = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast({
-      title: "Message Sent Successfully!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", subject: "", message: "", category: "" });
+    try {
+      const { name, email, subject, message, category } = formData;
+      const { id } = await saveContactMessage({ name, email, subject, message, category });
+
+      // Fire-and-forget email; don't block UX on email latency
+      sendContactEmail({ name, email, subject, message, category }, "yusufchakki3@gmail.com").catch(() => {});
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: id ? "Your message has been saved and emailed." : "Your message has been saved.",
+      });
+      setFormData({ name: "", email: "", subject: "", message: "", category: "" });
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      toast({
+        title: "Failed to send message",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
